@@ -15,12 +15,6 @@ public class AgenceServiceImpl implements IAgenceService {
 
   @Override
   public Agence create(Agence agence) {
-    if (agence.getIdAgence() != null) {
-      throw new IllegalArgumentException("Une nouvelle agence ne doit pas avoir d'identifiant");
-    }
-    if (agence.getNom() == null || agence.getNom().trim().isEmpty()) {
-      throw new IllegalArgumentException("Le nom de l'agence ne peut pas être vide");
-    }
     return agenceRepository.save(agence);
   }
 
@@ -37,9 +31,6 @@ public class AgenceServiceImpl implements IAgenceService {
 
   @Override
   public Agence update(Long id, Agence agence) {
-    if (agence.getNom() == null || agence.getNom().trim().isEmpty()) {
-      throw new IllegalArgumentException("Le nom de l'agence ne peut pas être vide");
-    }
     Agence existant = findById(id);
     existant.setNom(agence.getNom());
     existant.setVille(agence.getVille());

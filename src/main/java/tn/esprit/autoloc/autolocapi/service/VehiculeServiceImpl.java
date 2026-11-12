@@ -1,6 +1,5 @@
 package tn.esprit.autoloc.autolocapi.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,6 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
   @Override
   public Vehicule create(Vehicule vehicule) {
-    if (vehicule.getIdVehicule() != null) {
-      throw new IllegalArgumentException("Un nouveau véhicule ne doit pas avoir d'identifiant");
-    }
-    if (vehicule.getTarifJournalier() != null && vehicule.getTarifJournalier().compareTo(BigDecimal.ZERO) < 0) {
-      throw new IllegalArgumentException("Le tarif journalier ne peut pas être négatif");
-    }
     return vehiculeRepository.save(vehicule);
   }
 
@@ -38,9 +31,6 @@ public class VehiculeServiceImpl implements IVehiculeService {
 
   @Override
   public Vehicule update(Long id, Vehicule vehicule) {
-    if (vehicule.getTarifJournalier() != null && vehicule.getTarifJournalier().compareTo(BigDecimal.ZERO) < 0) {
-      throw new IllegalArgumentException("Le tarif journalier ne peut pas être négatif");
-    }
     Vehicule existant = findById(id);
     existant.setImmatriculation(vehicule.getImmatriculation());
     existant.setMarque(vehicule.getMarque());

@@ -15,13 +15,6 @@ public class ClientServiceImpl implements IClientService {
 
   @Override
   public Client create(Client client) {
-    if (client.getIdClient() != null) {
-      throw new IllegalArgumentException("Un nouveau client ne doit pas avoir d'identifiant");
-    }
-    if (client.getNom() == null || client.getNom().trim().isEmpty()
-        || client.getEmail() == null || client.getEmail().trim().isEmpty()) {
-      throw new IllegalArgumentException("Le nom et l'email du client ne peuvent pas être vides");
-    }
     return clientRepository.save(client);
   }
 
@@ -38,10 +31,6 @@ public class ClientServiceImpl implements IClientService {
 
   @Override
   public Client update(Long id, Client client) {
-    if (client.getNom() == null || client.getNom().trim().isEmpty()
-        || client.getEmail() == null || client.getEmail().trim().isEmpty()) {
-      throw new IllegalArgumentException("Le nom et l'email du client ne peuvent pas être vides");
-    }
     Client existant = findById(id);
     existant.setNom(client.getNom());
     existant.setPrenom(client.getPrenom());
