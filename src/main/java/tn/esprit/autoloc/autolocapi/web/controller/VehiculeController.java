@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.autoloc.autolocapi.domain.Vehicule;
 import tn.esprit.autoloc.autolocapi.service.IVehiculeService;
+import tn.esprit.autoloc.autolocapi.web.dto.VehiculeDTO;
 import tn.esprit.autoloc.autolocapi.web.dto.VehiculeRequestDTO;
 import tn.esprit.autoloc.autolocapi.web.dto.VehiculeResponseDTO;
 import tn.esprit.autoloc.autolocapi.web.mapper.VehiculeMapper;
@@ -83,5 +84,23 @@ public class VehiculeController {
   public ResponseEntity<Void> deleteById(@PathVariable Long id) {
     vehiculeService.deleteById(id);
     return ResponseEntity.noContent().build();
+  }
+
+  // ========== Services d'affectation ==========
+
+  @PutMapping("/{idVehicule}/affecter-equipement/{idEquipement}")
+  @Operation(summary = "Affecter un equipement a un vehicule")
+  public ResponseEntity<VehiculeDTO> affecterVehiculeAEquipement(
+      @PathVariable Long idVehicule,
+      @PathVariable Long idEquipement) {
+    return ResponseEntity.ok(vehiculeService.affecterVehiculeAEquipement(idVehicule, idEquipement));
+  }
+
+  @PostMapping("/affecter-maintenance")
+  @Operation(summary = "Affecter une maintenance a un vehicule par immatriculation")
+  public ResponseEntity<VehiculeDTO> affecterMaintenanceAvehicule(
+      @RequestParam String description,
+      @RequestParam String immatriculation) {
+    return ResponseEntity.ok(vehiculeService.affecterMaintenanceAvehicule(description, immatriculation));
   }
 }
